@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 9 Computer Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 { color: #2d3436; }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #dfe6e9;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .options button:hover {
+            background: #0984e3;
+            color: white;
+        }
+        #score-container {
+            font-size: 20px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container" id="game-box">
+    <h2>Class 9 Computer Quiz</h2>
+    <div id="quiz">
+        <div class="question" id="question-text">Loading question...</div>
+        <div class="options" id="options-box"></div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { q: "Which of the following is an input device?", options: ["Monitor", "Keyboard", "Printer", "Speaker"], answer: 1 },
+        { q: "What does CPU stand for?", options: ["Central Processing Unit", "Central Program Utility", "Computer Personal Unit", "Central Processor Union"], answer: 0 },
+        { q: "Which of the following is system software?", options: ["MS Word", "Windows OS", "Photoshop", "Paint"], answer: 1 },
+        { q: "What is the extension of a Notepad file?", options: [".docx", ".txt", ".jpg", ".exe"], answer: 1 },
+        { q: "Which memory is temporary (volatile)?", options: ["ROM", "Hard Disk", "RAM", "CD-ROM"], answer: 2 },
+        { q: "Brain of the computer is?", options: ["ALU", "Control Unit", "CPU", "Memory"], answer: 2 },
+        { q: "1 Byte is equal to how many bits?", options: ["4 bits", "8 bits", "1024 bits", "2 bits"], answer: 1 },
+        { q: "Which device is used to print hard copy?", options: ["Keyboard", "Scanner", "Printer", "Monitor"], answer: 2 },
+        { q: "An algorithm is a...", options: ["Machine code", "Step-by-step procedure", "Browser", "Operating System"], answer: 1 },
+        { q: "Which is not an output device?", options: ["Speaker", "Projector", "Mouse", "Monitor"], answer: 2 }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionText = document.getElementById("question-text");
+    const optionsBox = document.getElementById("options-box");
+    const gameBox = document.getElementById("game-box");
+
+    function loadQuiz() {
+        if (currentQuestion < questions.length) {
+            let q = questions[currentQuestion];
+            questionText.innerText = (currentQuestion + 1) + ". " + q.q;
+            optionsBox.innerHTML = "";
+            q.options.forEach((opt, index) => {
+                let btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(index);
+                optionsBox.appendChild(btn);
+            });
+        } else {
+            gameBox.innerHTML = `<h2>Quiz Finished! 🎉</h2><p>Aapka Score: <span id="score-container">${score}</span> / ${questions.length}</p><button onclick="location.reload()" style="padding:10px 20px; background:#0984e3; color:white; border:none; border-radius:5px; cursor:pointer;">Dobara Khelein</button>`;
+        }
+    }
+
+    function checkAnswer(selected) {
+        if (selected === questions[currentQuestion].answer) {
+            score++;
+        }
+        currentQuestion++;
+        loadQuiz();
+    }
+
+    loadQuiz();
+</script>
+
+</body>
+</html>
